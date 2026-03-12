@@ -36,13 +36,11 @@ class MarketplaceScraper:
                 "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
             }
             response = requests.get(self.url, headers=headers, timeout=10)
-            if response.status_code == 200:
+           if response.status_code == 200:
                 return response.text
             else:
+                st.error(f"🚨 Fomos bloqueados pelo site no link: {self.url} (Erro {response.status_code})")
                 return ""
-        except Exception as e:
-            return ""
-
     def parse_html(self):
         return BeautifulSoup(self.html, "html.parser")
 
@@ -259,4 +257,5 @@ if st.button("🚀 Gerar Dossiê Estratégico", type="primary", use_container_wi
                 st.success("👉 **Ansiedade de Envio:** Destaque 'Envio Imediato' ou 'Pronta Entrega' na sua primeira foto.")
 if len(question_clusters["entrega"]) > 0:
                 st.success("👉 **Ansiedade de Envio:** Destaque 'Envio Imediato' ou 'Pronta Entrega' na sua primeira foto.")
+
 
