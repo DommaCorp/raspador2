@@ -17,7 +17,7 @@ try:
     CHAVE_API = st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=CHAVE_API)
     # Usando o modelo mais atual e rápido
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-pro')
 except Exception as e:
     st.error("⚠️ Erro de Autenticação: A chave da API do Gemini não foi encontrada.")
     st.info("Lembre-se de ir nas configurações do seu app no Streamlit Cloud (Settings > Secrets) e adicionar: GEMINI_API_KEY = 'sua_chave_aqui'")
@@ -109,3 +109,4 @@ if st.button("🚀 Gerar Dossiê com IA", type="primary", use_container_width=Tr
             except Exception as e:
                 st.error("❌ Ocorreu um erro na comunicação com a IA.")
                 st.write(f"Detalhes do erro: {e}")
+
