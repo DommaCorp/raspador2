@@ -257,4 +257,6 @@ if st.button("🚀 Gerar Dossiê Estratégico", type="primary", use_container_wi
                 st.info("👉 **Falta de Prova Social:** Clientes duvidam do resultado. Adicione fotos de Antes/Depois no carrossel da imagem.")
             if len(question_clusters["entrega"]) > 0:
                 st.success("👉 **Ansiedade de Envio:** Destaque 'Envio Imediato' ou 'Pronta Entrega' na sua primeira foto.")
-        print(k, ":", v)
+if len(question_clusters["entrega"]) > 0:
+                st.success("👉 **Ansiedade de Envio:** Destaque 'Envio Imediato' ou 'Pronta Entrega' na sua primeira foto.")
+
