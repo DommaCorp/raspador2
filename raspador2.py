@@ -10,17 +10,28 @@ st.title("🧠 Dossiê de Mercado com IA: Analisador de Concorrência")
 st.write("Análise avançada usando a inteligência do Gemini para contornar bloqueios de sites e extrair estratégias reais de venda.")
 
 # ============================================
-# CONFIGURAÇÃO DA API DO GEMINI
+# CONFIGURAÇÃO DA API DO GEMINI E AUTO-DETECÇÃO
 # ============================================
-# Tenta puxar a chave de API dos segredos do Streamlit Cloud
 try:
     CHAVE_API = st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=CHAVE_API)
-    # Usando o modelo mais atual e rápido
-    model = genai.GenerativeModel('gemini-pro')
+    
+    # TRUQUE ANTI-ERRO 404: Busca o modelo automaticamente
+    modelo_valido = None
+    for m in genai.list_models():
+        if 'generateContent' in m.supported_generation_methods and 'gemini' in m.name.lower():
+            modelo_valido = m.name
+            break # Pega o primeiro Gemini que estiver liberado para a sua chave
+            
+    if modelo_valido:
+        model = genai.GenerativeModel(modelo_valido)
+    else:
+        st.error("❌ Nenhum modelo Gemini encontrado para a sua chave de API.")
+        st.stop()
+
 except Exception as e:
-    st.error("⚠️ Erro de Autenticação: A chave da API do Gemini não foi encontrada.")
-    st.info("Lembre-se de ir nas configurações do seu app no Streamlit Cloud (Settings > Secrets) e adicionar: GEMINI_API_KEY = 'sua_chave_aqui'")
+    st.error("⚠️ Erro de Autenticação: A chave da API do Gemini não foi encontrada ou é inválida.")
+    st.info("Verifique no Streamlit Cloud (Settings > Secrets) se a variável GEMINI_API_KEY está correta.")
     st.stop()
 
 # ============================================
@@ -55,21 +66,18 @@ st.write("---")
 # ============================================
 if st.button("🚀 Gerar Dossiê com IA", type="primary", use_container_width=True):
     
-    # Coleta todos os links preenchidos
     urls_input = [url1, url2, url3, url4, url5, url6, url7, url8]
     urls_validas = [u.strip() for u in urls_input if u.strip() != ""]
     
-    # Validações
     if not nome_produto:
         st.warning("⚠️ Por favor, digite o Nome do Produto antes de gerar o dossiê.")
     elif not urls_validas:
         st.warning("⚠️ O Link 1 é obrigatório. Insira pelo menos um link para começar a análise.")
     else:
-        with st.spinner(f"🤖 A IA está extraindo dados de mercado e analisando as estratégias para '{nome_produto}'..."):
+        with st.spinner(f"🤖 IA conectada ao modelo ({modelo_valido}). Analisando o mercado para '{nome_produto}'..."):
             
             links_formatados = "\n".join(urls_validas)
 
-            # O PROMPT MESTRE QUE FAZ A MÁGICA ACONTECER
             prompt = f"""
             Você é um Especialista Sênior em E-commerce, Neuromarketing e SEO para marketplaces como o Mercado Livre no Brasil.
 
@@ -79,7 +87,7 @@ if st.button("🚀 Gerar Dossiê com IA", type="primary", use_container_width=Tr
             Links dos Concorrentes fornecidos:
             {links_formatados}
 
-            Com base no nome do produto, nas pistas fornecidas pelas URLs dos concorrentes, e no seu vasto conhecimento sobre o mercado de cosméticos e vendas online no Brasil, gere um relatório rigoroso estruturado nas 4 seções abaixo. 
+            Com base no nome do produto e nas pistas fornecidas pelas URLs dos concorrentes, gere um relatório estruturado nas 4 seções abaixo. 
 
             Sua resposta DEVE ser formatada em Markdown, usando títulos, bullet points e negritos para facilitar a leitura.
 
@@ -97,16 +105,12 @@ if st.button("🚀 Gerar Dossiê com IA", type="primary", use_container_width=Tr
             """
 
             try:
-                # Chama a API do Gemini
                 response = model.generate_content(prompt)
                 
                 st.success(f"✅ Dossiê gerado com sucesso para: **{nome_produto.upper()}**!")
                 st.divider()
-                
-                # Exibe a resposta da IA bonitinha na tela
                 st.markdown(response.text)
                 
             except Exception as e:
-                st.error("❌ Ocorreu um erro na comunicação com a IA.")
+                st.error("❌ Ocorreu um erro na geração do conteúdo.")
                 st.write(f"Detalhes do erro: {e}")
-
