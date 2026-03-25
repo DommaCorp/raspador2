@@ -8,20 +8,25 @@ import os
 st.set_page_config(page_title="DOMMACORP - Dossiê IA", layout="wide", page_icon="🔥")
 
 # ============================================
-# INJEÇÃO DE CSS (O TEMA DA DOMMACORP)
+# INJEÇÃO DE CSS (TEMA LIGHT DOMMACORP)
 # ============================================
 st.markdown("""
 <style>
-    /* Fundo escuro e cor do texto geral */
+    /* Fundo branco e cor do texto geral escura */
     .stApp {
-        background-color: #0E1117;
-        color: #FAFAFA;
+        background-color: #FFFFFF;
+        color: #1E1E1E;
     }
     
+    /* Textos normais, marcações e parágrafos */
+    p, .stMarkdown {
+        color: #333333 !important;
+    }
+
     /* Estilizando o Botão Principal com Degradê Laranja/Dourado */
     div.stButton > button:first-child {
         background: linear-gradient(90deg, #FF8C00 0%, #FF5100 100%);
-        color: white;
+        color: white !important;
         border: none;
         border-radius: 8px;
         padding: 10px 24px;
@@ -42,11 +47,17 @@ st.markdown("""
         color: #FF8C00 !important;
     }
     
-    /* Caixas de texto mais elegantes */
+    /* Ajuste dos títulos em cima das caixas de texto (Labels) */
+    label {
+        color: #1E1E1E !important; 
+        font-weight: 600 !important;
+    }
+    
+    /* Caixas de texto claras com letras escuras */
     .stTextInput > div > div > input {
-        background-color: #1A1C23;
-        color: white;
-        border: 1px solid #FF8C00;
+        background-color: #F8F9FA !important; /* Fundo levemente cinza claro */
+        color: #000000 !important; /* Letras pretas dentro da caixa */
+        border: 1px solid #FF8C00 !important; /* Borda laranja da DommaCorp */
         border-radius: 5px;
     }
 </style>
@@ -55,11 +66,11 @@ st.markdown("""
 # ============================================
 # CABEÇALHO COM LOGO
 # ============================================
-# Cria 3 colunas para centralizar a logo perfeitamente
-col_vazia1, col_logo, col_vazia2 = st.columns([1, 2, 1])
+# TRUQUE DA LOGO MENOR: Mudamos as colunas invisíveis para [2, 1, 2] 
+# Isso faz a logo ficar espremida no meio, ocupando só 20% da tela, perfeitamente centralizada.
+col_vazia1, col_logo, col_vazia2 = st.columns([2, 1, 2])
 
 with col_logo:
-    # Tenta carregar a imagem. Se você não tiver feito o upload ainda, ele exibe um texto provisório.
     if os.path.exists("logo.jpg"):
         st.image("logo.jpg", use_container_width=True)
     elif os.path.exists("logo.png"):
@@ -67,8 +78,8 @@ with col_logo:
     else:
         st.markdown("<h1 style='text-align: center; font-size: 50px;'>DOMMACORP</h1>", unsafe_allow_html=True)
 
-st.markdown("<h3 style='text-align: center; color: #FFFFFF !important;'>Dossiê de Mercado com IA e Neuromarketing</h3>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center;'>Domine. Converta. Cresça. - Extração de dados de mercado e DNA emocional de vendas.</p>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>Dossiê de Mercado com IA e Neuromarketing</h3>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; font-weight: bold;'>Domine. Converta. Cresça. - Extração de dados de mercado e DNA emocional de vendas.</p>", unsafe_allow_html=True)
 st.write("---")
 
 # ============================================
