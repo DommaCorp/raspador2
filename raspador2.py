@@ -105,17 +105,17 @@ if st.button("🚀 Gerar Dossiê DOMMACORP", type="primary", use_container_width
     if not nome_produto: st.warning("⚠️ Digite o Nome do Produto.")
     elif not urls_validas: st.warning("⚠️ O Link 1 é obrigatório.")
     else:
-        with st.spinner(f"🤖 Analisando dores dos clientes e criando roteiro visual para '{nome_produto}'..."):
+        with st.spinner(f"🤖 Analisando a operação dos concorrentes e criando plano de ação para '{nome_produto}'..."):
             links_formatados = "\n".join(urls_validas)
 
             prompt = f"""
-            Você é um Especialista Sênior em E-commerce, Neuromarketing, SEO e Direção de Arte Visual para marketplaces como o Mercado Livre no Brasil.
+            Você é um Especialista Sênior em E-commerce, Neuromarketing, SEO e Experiência do Cliente para marketplaces como o Mercado Livre no Brasil.
 
             Produto Alvo: {nome_produto}
             Links dos Concorrentes:
             {links_formatados}
 
-            Gere um relatório estruturado exatamente nas 5 seções abaixo em Markdown.
+            Gere um relatório estruturado exatamente nas 6 seções abaixo em Markdown.
 
             ### 📊 1. Análise de Preços de Mercado
             Estime Preço Médio, Mínimo e Máximo praticado para "{nome_produto}".
@@ -129,11 +129,15 @@ if st.button("🚀 Gerar Dossiê DOMMACORP", type="primary", use_container_width
 
             ### 🗣️ 4. A Voz do Cliente (Perguntas e Avaliações Reais)
             Com base no comportamento real de compradores desse nicho, mapeie os atritos:
-            1. **Dúvidas Frequentes:** O que eles mais perguntam antes de comprar? (ex: originalidade, validade, modo de uso).
-            2. **Reclamações Recorrentes nos Concorrentes:** Quais as maiores dores nas avaliações negativas? (ex: vazou no transporte, não veio lacrado, falsificação).
+            1. **Dúvidas Frequentes:** O que eles mais perguntam antes de comprar? (ex: compatibilidade, validade, cores).
+            2. **Reclamações Recorrentes nos Concorrentes:** Quais as maiores dores nas avaliações negativas? (ex: tamanho menor que o esperado, quebrou no transporte, difícil de usar).
 
-            ### 🎯 5. Plano de Produção Visual Estratégico (Carrossel)
-            Use EXATAMENTE as dores mapeadas na Seção 4 e os desejos da Seção 3. Cada foto deve ser um "remédio" para uma dor ou um "acelerador" para um desejo.
+            ### 🛠️ 5. Plano de Melhorias Operacionais e Estruturais
+            Com base nas falhas mapeadas na Seção 4, liste de 2 a 4 ações TÁTICAS e OPERACIONAIS que devem ser aplicadas na estrutura do anúncio ou na logística para aniquilar esses problemas na raiz.
+            (Exemplos: Se perguntam muito de cor, sugira "Ativar a grade de variações no Mercado Livre"; Se reclamam de tamanho, sugira "Colocar uma foto com o produto ao lado de um objeto comum para escala"; Se reclamam de vazamento, sugira "Isolar a tampa com fita e enviar em caixa de papelão dupla").
+
+            ### 🎯 6. Plano de Produção Visual Estratégico (Carrossel)
+            Use os desejos da Seção 3 e as resoluções da Seção 5 para criar o roteiro das fotos.
 
             **REGRAS GLOBAIS OBRIGATÓRIAS PARA OS PROMPTS:**
             Adicione no final de CADA prompt: "Tamanho 1200x1200px, resolução 241 dpi. Textos, fontes e embalagem RIGOROSAMENTE IDÊNTICOS ao original".
@@ -144,11 +148,11 @@ if st.button("🚀 Gerar Dossiê DOMMACORP", type="primary", use_container_width
 
             #### B. Fotos de Benefícios (1 a 3 imagens)
             - **Prompt:** Foco em satisfazer o desejo do cérebro Límbico. Fundo livre.
-            - **Texto:** Título curto e Checklist do benefício emocional.
+            - **Texto:** Título curto e Checklist do benefício.
 
-            #### C. Fotos de Quebra de Objeção e Segurança (1 a 3 imagens)
-            - **Prompt:** Crie a imagem focada especificamente em DESTRUIR as reclamações e dúvidas listadas na Seção 4 (ex: se reclamam de vazamento, sugira uma foto mostrando a caixa blindada).
-            - **Texto:** Garantia, alerta de segurança ou prova de originalidade.
+            #### C. Fotos de Quebra de Objeção e Instrução (1 a 3 imagens)
+            - **Prompt:** Transforme as resoluções da Seção 5 em imagens visuais (ex: foto de tabela de medidas, foto demonstrando a embalagem segura, foto mostrando como escolher a variação).
+            - **Texto:** Frases de garantia, instruções claras ou prova social.
 
             #### D. Foto Ambientada de Conclusão (O "Grand Finale")
             - **Prompt:** A foto do "eu ideal" alcançando o desejo Primitivo.
