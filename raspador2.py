@@ -1,13 +1,75 @@
 import streamlit as st
 import google.generativeai as genai
+import os
 
 # ============================================
-# CONFIGURAÇÃO DA PÁGINA
+# CONFIGURAÇÃO DA PÁGINA (Aba do Navegador)
 # ============================================
-st.set_page_config(page_title="Dossiê de Mercado IA - Neuromarketing", layout="wide")
+st.set_page_config(page_title="DOMMACORP - Dossiê IA", layout="wide", page_icon="🔥")
 
-st.title("🧠 Dossiê de Mercado com IA e Neuromarketing")
-st.write("Análise avançada usando a inteligência do Gemini para extrair dados de mercado e o DNA emocional da venda.")
+# ============================================
+# INJEÇÃO DE CSS (O TEMA DA DOMMACORP)
+# ============================================
+st.markdown("""
+<style>
+    /* Fundo escuro e cor do texto geral */
+    .stApp {
+        background-color: #0E1117;
+        color: #FAFAFA;
+    }
+    
+    /* Estilizando o Botão Principal com Degradê Laranja/Dourado */
+    div.stButton > button:first-child {
+        background: linear-gradient(90deg, #FF8C00 0%, #FF5100 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-weight: bold;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        box-shadow: 0px 4px 10px rgba(255, 140, 0, 0.3);
+    }
+    
+    /* Efeito ao passar o mouse no botão */
+    div.stButton > button:first-child:hover {
+        transform: scale(1.02);
+        box-shadow: 0px 6px 15px rgba(255, 140, 0, 0.6);
+    }
+    
+    /* Cores dos títulos (Laranja DOMMACORP) */
+    h1, h2, h3 {
+        color: #FF8C00 !important;
+    }
+    
+    /* Caixas de texto mais elegantes */
+    .stTextInput > div > div > input {
+        background-color: #1A1C23;
+        color: white;
+        border: 1px solid #FF8C00;
+        border-radius: 5px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# ============================================
+# CABEÇALHO COM LOGO
+# ============================================
+# Cria 3 colunas para centralizar a logo perfeitamente
+col_vazia1, col_logo, col_vazia2 = st.columns([1, 2, 1])
+
+with col_logo:
+    # Tenta carregar a imagem. Se você não tiver feito o upload ainda, ele exibe um texto provisório.
+    if os.path.exists("logo.jpg"):
+        st.image("logo.jpg", use_container_width=True)
+    elif os.path.exists("logo.png"):
+        st.image("logo.png", use_container_width=True)
+    else:
+        st.markdown("<h1 style='text-align: center; font-size: 50px;'>DOMMACORP</h1>", unsafe_allow_html=True)
+
+st.markdown("<h3 style='text-align: center; color: #FFFFFF !important;'>Dossiê de Mercado com IA e Neuromarketing</h3>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>Domine. Converta. Cresça. - Extração de dados de mercado e DNA emocional de vendas.</p>", unsafe_allow_html=True)
+st.write("---")
 
 # ============================================
 # CONFIGURAÇÃO DA API DO GEMINI E AUTO-DETECÇÃO
@@ -40,7 +102,6 @@ try:
 
 except Exception as e:
     st.error("⚠️ Erro de Autenticação: A chave da API do Gemini não foi encontrada ou é inválida.")
-    st.info("Verifique no Streamlit Cloud (Settings > Secrets) se a variável GEMINI_API_KEY está correta.")
     st.stop()
 
 # ============================================
@@ -73,7 +134,7 @@ st.write("---")
 # ============================================
 # MOTOR DE INTELIGÊNCIA ARTIFICIAL E BOTÃO
 # ============================================
-if st.button("🚀 Gerar Dossiê Estratégico Completo", type="primary", use_container_width=True):
+if st.button("🚀 Gerar Dossiê DOMMACORP", type="primary", use_container_width=True):
     
     urls_input = [url1, url2, url3, url4, url5, url6, url7, url8]
     urls_validas = [u.strip() for u in urls_input if u.strip() != ""]
@@ -83,11 +144,10 @@ if st.button("🚀 Gerar Dossiê Estratégico Completo", type="primary", use_con
     elif not urls_validas:
         st.warning("⚠️ O Link 1 é obrigatório. Insira pelo menos um link para começar a análise.")
     else:
-        with st.spinner(f"🤖 IA conectada ({modelo_valido}). Analisando mercado e criando roteiro visual para '{nome_produto}'..."):
+        with st.spinner(f"🤖 IA DOMMACORP conectada ({modelo_valido}). Analisando mercado e criando roteiro visual para '{nome_produto}'..."):
             
             links_formatados = "\n".join(urls_validas)
 
-            # --- PROMPT MESTRE COM A NOVA SEÇÃO 5 ---
             prompt = f"""
             Você é um Especialista Sênior em E-commerce, Neuromarketing, SEO e Direção de Arte Visual para marketplaces como o Mercado Livre no Brasil.
 
@@ -126,29 +186,29 @@ if st.button("🚀 Gerar Dossiê Estratégico Completo", type="primary", use_con
             #### A. Foto 1: A Capa Perfeita (Obrigatório Fundo Branco)
             A primeira imagem é a vitrine do anúncio. 
             - **Regra da Capa:** Esta é a ÚNICA foto que deve ter o fundo 100% branco (as demais têm fundo livre).
-            - **Prompt:** Crie um prompt focado no produto com fundo branco puro. Descreva um ângulo estratégico (ex: low angle para imponência) e uma iluminação (ex: reflexos brilhantes controlados) que tornem o produto extremamente atrativo. Inclua as regras globais de tamanho e embalagem.
+            - **Prompt:** Crie um prompt focado no produto com fundo branco puro. Descreva um ângulo estratégico e uma iluminação que tornem o produto imponente. Inclua as regras globais de tamanho e embalagem.
             - **Texto na Foto:** (Geralmente a capa não tem texto para não perder exposição, mas sugira caso aplique).
 
             #### B. Fotos de Benefícios (1 a 3 imagens)
             Sugira imagens com fundo livre que materializam os principais benefícios técnicos e emocionais.
-            - **Prompt:** Cena, iluminação, ângulo e regras globais de tamanho/embalagem.
+            - **Prompt:** Cena, iluminação, ângulo e regras globais.
             - **Texto na Foto:** Título curto e Checklist de benefícios.
 
             #### C. Fotos de Quebra de Objeção (1 a 3 imagens)
-            Imagens para quebrar os medos mapeados na Seção 4 (ex: originalidade, modo de uso, tamanho). Fundo livre.
-            - **Prompt:** Cena, iluminação, ângulo e regras globais de tamanho/embalagem.
+            Imagens para quebrar os medos mapeados na Seção 4. Fundo livre.
+            - **Prompt:** Cena, iluminação, ângulo e regras globais.
             - **Texto na Foto:** Títulos e textos de garantia ou prova social.
 
             #### D. Foto Ambientada de Conclusão (1 imagem - O "Grand Finale")
-            A foto de fechamento de venda. Fundo livre. Mostre o resultado final desejado pelo cérebro Límbico e Primitivo.
-            - **Prompt:** Cena com modelo ou ambiente altamente sofisticado, iluminação, ângulo e regras globais de tamanho/embalagem.
+            A foto de fechamento de venda mostrando o resultado final desejado. Fundo livre.
+            - **Prompt:** Cena com modelo ou ambiente altamente sofisticado, iluminação, ângulo e regras globais.
             - **Texto na Foto:** Frase curta final resumindo a transformação emocional.
             """
 
             try:
                 response = model.generate_content(prompt)
                 
-                st.success(f"✅ Dossiê gerado com sucesso para: **{nome_produto.upper()}**!")
+                st.success(f"✅ Dossiê DOMMACORP gerado com sucesso para: **{nome_produto.upper()}**!")
                 st.divider()
                 st.markdown(response.text)
                 
